@@ -149,7 +149,7 @@ var viewMatrix = [
 ];
 
 // translating z (zoom)
-viewMatrix[14] = viewMatrix[14] - 1
+viewMatrix[14] = viewMatrix[14] - 1;
 
 /* ================================ Rotation ================================ */
 function rotateZ(m, angle) {

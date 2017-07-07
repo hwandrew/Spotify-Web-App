@@ -1,24 +1,46 @@
 from flask import *
 from config import *
+import base64
+import json
+import requests
+import urllib
 
 main = Blueprint('main', __name__, template_folder='templates')
 
-
-# https://developer.spotify.com/web-api/authorization-guide/
-# Authorization Steps for Spotify Requests:
-# 1) Application requests authorization
-# 2) User is asked to authorize access with scopes
-# 3) User is redirected back to specific redirect URI
-# 4) Application requests refresh & access tokens
-# 5) Tokens are returned to application
-# 6) Use the access token to access the Spotify Web API
-# 7) Requesting access token from refresh token
-
-
 @main.route('/')
-def main_route():
+def auth_route():
 	# (1) -- request authorization
-	urlArgs = "&".join(["{}={}".format(key, value) for (key, value) in AUTH_PARAMETERS.items()])
-	requestURL = "{}?{}".format(SPOTIFY_AUTH_URL, urlArgs)
-	print requestURL
-	return render_template("index.html")
+	urlArgs = "&".join(["{}={}".format(key, urllib.quote(val)) for key, val in authQueryParams.items()])
+	authURL = "{}/?{}".format(SPOTIFY_AUTH_URL, urlArgs)
+	return redirect(authURL)
+
+
+@main.route('/callback')
+def callback():
+	# (4) -- request refresh & access tokens
+	auth_token = request.args['code']
+	params = {
+		"grant_type": "authorization_code",
+		"code": str(auth_token),
+		"redirect_uri": CALLBACK_URI
+	}
+	base64encoded = base64.b64encode("{}:{}".format(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET))
+	header = {"Authorization": "Basic {}".format(base64encoded)}
+	tokenPostReq = requests.post(SPOTIFY_TOKEN_URL, data=params, headers=header)
+
+	# (5) -- token returned to application
+	responseData = json.loads(tokenPostReq.text)
+	accessToken = responseData["access_token"]
+	refreshToken = responseData["refresh_token"]
+	tokenType = responseData["token_type"]
+	expiresIn = responseData["expires_in"]
+
+	# (6) -- use token to access webAPI
+	AUTHORIZATION_HEADER["Authorization"] = "Bearer {}".format(accessToken)
+
+	return redirect(url_for('main.home'))
+
+
+@main.route('/home')
+def home():
+	return render_template('index.html')
