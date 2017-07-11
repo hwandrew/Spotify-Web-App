@@ -17,6 +17,7 @@ def auth_route():
 
 @main.route('/callback')
 def callback():
+	global tokenInfo
 	# (4) -- request refresh & access tokens
 	auth_token = request.args['code']
 	params = {
@@ -30,17 +31,16 @@ def callback():
 
 	# (5) -- token returned to application
 	responseData = json.loads(tokenPostReq.text)
-	accessToken = responseData["access_token"]
-	refreshToken = responseData["refresh_token"]
-	tokenType = responseData["token_type"]
-	expiresIn = responseData["expires_in"]
-
-	# (6) -- use token to access webAPI
-	AUTHORIZATION_HEADER["Authorization"] = "Bearer {}".format(accessToken)
+	tokenInfo = responseData
+	# accessToken = responseData["access_token"]
+	# refreshToken = responseData["refresh_token"]
+	# tokenType = responseData["token_type"]
+	# expiresIn = responseData["expires_in"]
 
 	return redirect(url_for('main.home'))
 
 
 @main.route('/home')
 def home():
-	return render_template('index.html')
+	authHeader = "Bearer {}".format(tokenInfo["access_token"])
+	return render_template('index.html', baseURL=SPOTIFY_BASE_URL, authHeader=authHeader)

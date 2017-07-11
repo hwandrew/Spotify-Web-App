@@ -29,4 +29,4 @@ authQueryParams = dict(
 	client_id = SPOTIFY_CLIENT_ID
 )
 
-AUTHORIZATION_HEADER = {}
+tokenInfo = {}
