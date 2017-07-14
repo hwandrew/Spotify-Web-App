@@ -1,3 +1,8 @@
+/*
+  This file handles sending track search requests to the Spotify API and deals
+  with the handling of results, including displaying the results on the screen
+*/
+
 function sendSearch() {
   var requestURL = baseURL + '/search';
   var query = escape(document.getElementById('searchInput').value);
@@ -34,14 +39,21 @@ function displayResults(result) {
   }
   else {
     while (list.firstChild) {
-      list.removeChild(list.firstChild)
+      list.removeChild(list.firstChild);
     }
   }
 
   var tracks = result["tracks"]["items"];
   for (var i = 0; i < tracks.length; i++) {
     var item = document.createElement("li");
-    item.appendChild(document.createTextNode(tracks[i]["name"]));
+    var artists = "";
+    for (var j = 0; j < tracks[i]["artists"].length; j++) {
+      artists += tracks[i]["artists"][j]["name"];
+      if (j != tracks[i]["artists"].length - 1) {
+        artists += ", "
+      }
+    }
+    item.appendChild(document.createTextNode(tracks[i]["name"] + " by " + artists));
     list.appendChild(item);
   }
 
