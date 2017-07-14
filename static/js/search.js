@@ -26,16 +26,30 @@ function sendSearch() {
 
 function displayResults(result) {
   var parentDiv = document.getElementById("searchResults");
-  var newList = document.createElement("ul");
+  var list = document.getElementById("resultsList");
+
+  if (list === null) {
+    list = document.createElement("ul");
+    list.setAttribute("id", "resultsList");
+  }
+  else {
+    while (list.firstChild) {
+      list.removeChild(list.firstChild)
+    }
+  }
 
   var tracks = result["tracks"]["items"];
   for (var i = 0; i < tracks.length; i++) {
     var item = document.createElement("li");
     item.appendChild(document.createTextNode(tracks[i]["name"]));
-    newList.appendChild(item);
+    list.appendChild(item);
   }
 
-  parentDiv.appendChild(newList);
+  if (list.firstChild === null) {
+    list.innerHTML = "No search results";
+  }
+
+  parentDiv.appendChild(list);
 }
 
 $(function() {
