@@ -9,7 +9,7 @@ function sendSearch() {
 
   $.ajax({
     url: requestURL,
-    asynch: true,
+    asynch: false,
     type: 'GET',
     headers: {
       'Authorization': authHeader
@@ -20,32 +20,33 @@ function sendSearch() {
     },
     success: function(result) {
       console.log("sucessful search");
-      displayResults(result)
+      tracks = result["tracks"]["items"];
+      displayResults(tracks);
     },
     error: function(xhr, request, error) {
       console.log("failed search");
       console.log(xhr.status);
-    }
+    },
+    dataType: 'json'
   });
 }
 
 function displayResults(result) {
-  var parentDiv = document.getElementById("searchResults");
   var list = document.getElementById("resultsList");
 
-  if (list === null) {
-    list = document.createElement("ul");
-    list.setAttribute("id", "resultsList");
-  }
-  else {
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
-    }
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
   }
 
-  var tracks = result["tracks"]["items"];
+  var tracks = result;
+  console.log(tracks);
   for (var i = 0; i < tracks.length; i++) {
     var item = document.createElement("li");
+    item.setAttribute("id", i);
+    item.addEventListener("click", toggleAudio);
+    var audio = document.createElement("audio");
+    audio.src = tracks[i]["preview_url"];
+    item.appendChild(audio);
     var artists = "";
     for (var j = 0; j < tracks[i]["artists"].length; j++) {
       artists += tracks[i]["artists"][j]["name"];
@@ -60,9 +61,13 @@ function displayResults(result) {
   if (list.firstChild === null) {
     list.innerHTML = "No search results";
   }
-
-  parentDiv.appendChild(list);
 }
+
+function toggleAudio() {
+  var audioElt = $(this).children("audio")[0];
+  return audioElt.paused ? audioElt.play() : audioElt.pause();
+}
+
 
 $(function() {
   $('#searchForm').submit(function(event) {
