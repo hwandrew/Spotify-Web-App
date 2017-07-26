@@ -31,22 +31,20 @@ function sendSearch() {
   });
 }
 
-function displayResults(result) {
+function displayResults(tracks) {
   var list = document.getElementById("resultsList");
 
   while (list.firstChild) {
     list.removeChild(list.firstChild);
   }
 
-  var tracks = result;
-  console.log(tracks);
+  // console.log(tracks);
+  // audio sample source: tracks[i]["preview_url"];
+
   for (var i = 0; i < tracks.length; i++) {
     var item = document.createElement("li");
     item.setAttribute("id", i);
-    item.addEventListener("click", toggleAudio);
-    var audio = document.createElement("audio");
-    audio.src = tracks[i]["preview_url"];
-    item.appendChild(audio);
+    item.addEventListener("click", selectSong);
     var artists = "";
     for (var j = 0; j < tracks[i]["artists"].length; j++) {
       artists += tracks[i]["artists"][j]["name"];
@@ -63,9 +61,17 @@ function displayResults(result) {
   }
 }
 
-function toggleAudio() {
-  var audioElt = $(this).children("audio")[0];
-  return audioElt.paused ? audioElt.play() : audioElt.pause();
+function selectSong() {
+  var trackIndex = $(this).attr("id");
+  // console.log(trackIndex);
+  var player = document.getElementById("audioPlayer");
+  if (tracks[trackIndex]["preview_url"]) {
+    player.setAttribute("src", tracks[trackIndex]["preview_url"]);
+    player.play();
+  }
+  else {
+    alert("preview unavailable");
+  }
 }
 
 

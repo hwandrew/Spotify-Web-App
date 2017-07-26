@@ -1,0 +1,9 @@
+#player {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+
+#audioPlayer {
+  width: 100%;
+}
