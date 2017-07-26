@@ -45,6 +45,12 @@ function displayResults(tracks) {
     var item = document.createElement("li");
     item.setAttribute("id", i);
     item.addEventListener("click", selectSong);
+    if (tracks[i]["preview_url"]) {
+      item.setAttribute("class", "preview");
+    }
+    else {
+      item.setAttribute("class", "noPreview");
+    }
     var artists = "";
     for (var j = 0; j < tracks[i]["artists"].length; j++) {
       artists += tracks[i]["artists"][j]["name"];

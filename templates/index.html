@@ -14,7 +14,7 @@
       var tracks; // stores search result object
     </script>
     <script src='/static/js/search.js' type='text/javascript'></script>
-    <script src='/static/js/play.js' type='text/javascript'></script>
+    <script src='/static/js/analyzer.js' type='text/javascript'></script>
 
     <form id='searchForm'>
       <input id='searchInput' type='text'/>
@@ -23,6 +23,10 @@
 
     <div id='searchResults'>
       <ul id='resultsList'></ul>
+    </div>
+
+    <div id="analyzer">
+      <canvas id="visualizer"></canvas>
     </div>
 
     <div id='player'>
