@@ -18,16 +18,21 @@ function initAnalyzer() {
   updateFrame();
 }
 
+function initBuffers() {
+  
+}
+
 function updateFrame() {
   window.requestAnimationFrame(updateFrame);
   fbcArray = new Uint8Array(analyzer.frequencyBinCount);
-  analyzer.getByteFrequencyData(fbcArray);
+  analyzer.getByteFrequencyData(fbcArray); // length of 1024
+  // console.log(fbcArray[1000]);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#00CCFF';
-  bars = 100;
+  bars = 200;
   for (var i = 0; i < bars; i++) {
-    barX = i * 3;
-    barWidth = 2;
+    barX = i * 2;
+    barWidth = 1;
     barHeight = -(fbcArray[i] / 2);
     ctx.fillRect(barX, canvas.height, barWidth, barHeight);
   }
