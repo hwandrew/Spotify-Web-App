@@ -18,11 +18,9 @@ function initAnalyzer() {
   updateFrame();
 }
 
-function initBuffers() {
-  
-}
-
 function updateFrame() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   window.requestAnimationFrame(updateFrame);
   fbcArray = new Uint8Array(analyzer.frequencyBinCount);
   analyzer.getByteFrequencyData(fbcArray); // length of 1024

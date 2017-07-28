@@ -1,28 +1,31 @@
-#player {
-  position: fixed;
-  bottom: 0px;
-  width: 99%;
-  margin-right: 5px;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-#audioPlayer {
+html, body {
   width: 100%;
-  margin-right: 5px;
+  height: 100%;
 }
 
-#analyzer {
-  width: 99%;
-  background: #000;
-  position: fixed;
-  bottom: 45px;
-  margin-right: 5px;
-}
-
-#analyzer > canvas {
+/* visualizer styling */
+#visualizer {
+  z-index: 0;
+  display: block;
+  position: absolute;
   width: 100%;
-  height: 100px;
-  background: #002D3C;
-  margin-right: 5px;
+  height: 100%;
+  background: #add8e6;
+}
+
+/* search styling */
+#searchStuff {
+  position: absolute;
+  z-index: 1;
+}
+
+#searchResults {
+  left: 5px;
 }
 
 #resultsList > li {
@@ -32,4 +35,17 @@
 
 .noPreview {
   color: grey;
+}
+
+/* player styling */
+#player {
+  position: fixed;
+  bottom: 0px;
+  margin-right: 5px;
+}
+
+#audioPlayer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
 }
