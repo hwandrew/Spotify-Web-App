@@ -5,7 +5,9 @@
 
 function sendSearch() {
   var requestURL = baseURL + '/search';
-  var query = escape(document.getElementById('searchInput').value);
+  var query = document.getElementById('searchInput').value;
+  query = query.replace(/ /g, '+');
+  console.log(query);
 
   $.ajax({
     url: requestURL,
