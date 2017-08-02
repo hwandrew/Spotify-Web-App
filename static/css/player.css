@@ -8,7 +8,9 @@ html, body {
   height: 100%;
 }
 
-/* visualizer styling */
+/* -------------------------------
+       visualizer styling
+   ------------------------------- */
 #visualizer {
   z-index: 0;
   display: block;
@@ -17,7 +19,9 @@ html, body {
   height: 100%;
 }
 
-/* search styling */
+/* -------------------------------
+       search styling
+   ------------------------------- */
 #searchStuff {
   position: absolute;
   z-index: 1;
@@ -25,20 +29,32 @@ html, body {
   left: 10px;
 }
 
+#toggle {
+  position: relative;
+}
+
 #searchResults {
   margin-top: 10px;
+  background-color: white;
 }
 
 #resultsList > li {
   list-style-type: none;
-  margin-bottom: 5px;
+  background-color: white;
+  margin: 5px;
+}
+
+#resultsList > li:hover {
+  background-color: #faebd7;
 }
 
 .noPreview {
   color: grey;
 }
 
-/* player styling */
+/* -------------------------------
+        player styling
+   ------------------------------- */
 #player {
   position: fixed;
   bottom: 0px;
