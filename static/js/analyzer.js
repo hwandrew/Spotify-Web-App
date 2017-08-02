@@ -2,10 +2,11 @@
 var audio, canvas, ctx, source, context, analyzer, fbcArray,
   bars, barX, barWidth, barHeight;
 var levelsData = [];
+var beatTime;
 var beatCutOff = 0;
 var beatMin = 0.15;
 var beatHoldTime = 40;
-var beatDecayRate = 0.97;
+var beatDecayRate = 0.90;
 
 // initialize analyzer data
 function initAnalyzer() {
@@ -24,6 +25,7 @@ function initAnalyzer() {
 }
 
 function updateAnalyzer() {
+  audio.crossOrigin = "anonymous";
   fbcArray = new Uint8Array(analyzer.frequencyBinCount);
   analyzer.getByteFrequencyData(fbcArray); // length: 1024
 
@@ -43,26 +45,31 @@ function updateAnalyzer() {
   level = sum / 32;
 
   if (level  > beatCutOff && level > beatMin){
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(canvas.width - 20, 20, 20, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.fillStyle = '#C25B56';
     beatCutOff = level *1.1;
     beatTime = 0;
-  }else{
-    if (beatTime <= beatHoldTime){
+  }
+  else {
+    ctx.fillStyle = '#FEF6EB';
+    if (beatTime <= beatHoldTime) {
       beatTime ++;
-    }else{
+    }
+    else {
       beatCutOff *= beatDecayRate;
       beatCutOff = Math.max(beatCutOff, beatMin);
     }
   }
 
+  ctx.beginPath();
+  ctx.arc(canvas.width - 20, 20, 20, 0, 2 * Math.PI);
+  ctx.fill();
+
   // set visualizer shapes
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = '#FEF6EB';
   ctx.beginPath();
   ctx.arc(canvas.width / 2, canvas.height / 2, fbcArray[100], 0, 2 * Math.PI);
   ctx.fill();
+  ctx.fillStyle = '#C25B56';
   bars = 100;
   barWidth = 2;
   for (var i = 0; i < bars; i++) {
@@ -78,7 +85,7 @@ function updateFrame() {
   window.requestAnimationFrame(updateFrame);
 
   // set background
-  ctx.fillStyle = '#add8e6';
+  ctx.fillStyle = '#525564';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   updateAnalyzer();

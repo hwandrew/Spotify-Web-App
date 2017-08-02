@@ -88,4 +88,22 @@ $(function() {
     event.preventDefault();
     sendSearch();
   });
+
+  $('#toggle').click(function() {
+    if ($('#resultsList').is(':visible')) {
+      $('#resultsList').hide(500);
+      $(this).html('Show Results');
+    }
+    else {
+      $('#resultsList').show(500);
+      $(this).html('Hide Results');
+    }
+  });
+
+  $('body').keyup(function(key) {
+    var player = document.getElementById("audioPlayer");
+    if(key.keyCode == 32){
+      player.paused ? player.play() : player.pause();
+    }
+  });
 });
