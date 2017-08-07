@@ -11,7 +11,7 @@ function sendSearch() {
 
   $.ajax({
     url: requestURL,
-    asynch: false,
+    asynch: true,
     type: 'GET',
     headers: {
       'Authorization': authHeader
@@ -26,21 +26,31 @@ function sendSearch() {
       displayResults(tracks);
     },
     error: function(xhr, request, error) {
+      var list = document.getElementById("resultsList");
+      list.innerHTML = "No search results";
+      $('#toggle').show(500);
+      if ($('#resultsList').is(':hidden')) {
+        $('#resultsList').show(500);
+        $('#toggle').css({'transform': 'rotate(0deg)'});
+      }
+
       console.log("failed search");
       console.log(xhr.status);
     },
-    dataType: 'json'
   });
 }
 
 function displayResults(tracks) {
+  $('#resultsList').hide(500);
+  $('#toggle').show(500);
+
   var list = document.getElementById("resultsList");
 
   while (list.firstChild) {
     list.removeChild(list.firstChild);
   }
 
-  // console.log(tracks);
+  console.log(tracks);
   // audio sample source: tracks[i]["preview_url"];
 
   for (var i = 0; i < tracks.length; i++) {
@@ -64,9 +74,8 @@ function displayResults(tracks) {
     list.appendChild(item);
   }
 
-  if (list.firstChild === null) {
-    list.innerHTML = "No search results";
-  }
+  $('#resultsList').show(500);
+  $('#toggle').css({'transform': 'rotate(0deg)'});
 }
 
 function selectSong() {
@@ -84,6 +93,9 @@ function selectSong() {
 
 
 $(function() {
+  $('#resultsList').hide();
+  $('#toggle').hide();
+
   $('#searchForm').submit(function(event) {
     event.preventDefault();
     sendSearch();
@@ -92,17 +104,17 @@ $(function() {
   $('#toggle').click(function() {
     if ($('#resultsList').is(':visible')) {
       $('#resultsList').hide(500);
-      $(this).html('Show Results');
+      $(this).css({'transform': 'rotate(180deg)'});
     }
     else {
       $('#resultsList').show(500);
-      $(this).html('Hide Results');
+      $(this).css({'transform': 'rotate(0deg)'});
     }
   });
 
   $('body').keyup(function(key) {
     var player = document.getElementById("audioPlayer");
-    if(key.keyCode == 32){
+    if(key.keyCode == 32) {
       player.paused ? player.play() : player.pause();
     }
   });

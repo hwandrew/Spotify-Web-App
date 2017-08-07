@@ -6,6 +6,7 @@
 html, body {
   width: 100%;
   height: 100%;
+  font-family: Arial;
 }
 
 /* -------------------------------
@@ -22,6 +23,16 @@ html, body {
 /* -------------------------------
        search styling
    ------------------------------- */
+#toggle {
+  z-index: 1;
+  left: 340px;
+  top: 8px;
+  position: fixed;
+  font-size: 22px;
+  color: #fef6eb;
+  transition: transform 0.5s;
+}
+
 #searchStuff {
   position: absolute;
   z-index: 1;
@@ -29,19 +40,48 @@ html, body {
   left: 10px;
 }
 
-#toggle {
-  position: relative;
+input[type=text] {
+  outline: none;
+  width: 250px;
+  font-size: 16px;
+  background: transparent;
+  border: 0px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #fef6eb;
+  color: #fef6eb;
+}
+
+input[type=submit] {
+  outline: none;
+  background: #fef6eb;
+  border: none;
+  font-size: 16px;
+  color: #525564;
+  padding: 3px 5px;
+}
+
+input[type=submit]:active {
+  background: #faebd7;
 }
 
 #searchResults {
+  width: 315px;
+  max-height: 500px;
   margin-top: 10px;
-  background-color: white;
+  background-color: #fef6eb;
+  transition: max-height 1s linear;
+}
+
+#resultsList {
+  max-height: 500px;
+  overflow-y: scroll;
+  color: #525564;
 }
 
 #resultsList > li {
   list-style-type: none;
-  background-color: white;
-  margin: 5px;
+  padding: 5px;
+  border-bottom: 1px solid #525564;
 }
 
 #resultsList > li:hover {
@@ -49,7 +89,7 @@ html, body {
 }
 
 .noPreview {
-  color: grey;
+  color: #74828f;
 }
 
 /* -------------------------------
@@ -58,7 +98,8 @@ html, body {
 #player {
   position: fixed;
   bottom: 0px;
-  margin-right: 5px;
+  width: 100%;
+  height: 50px;
 }
 
 #audioPlayer {

@@ -16,13 +16,13 @@
     <script src='/static/js/search.js' type='text/javascript'></script>
     <script src='/static/js/analyzer.js' type='text/javascript'></script>
 
+    <div id='toggle'>&#8743</div>
+
     <div id='searchStuff'>
       <form id='searchForm'>
-        <input id='searchInput' type='text'/>
-        <input id='searchSubmit' type='submit' value='Search'>
+        <input id='searchInput' type='text' autocomplete='off' placeholder='enter a song...'/>
+        <input id='searchSubmit' type='submit' value='search'>
       </form>
-
-      <div id='toggle'>Hide Results</div>
 
       <div id='searchResults'>
         <ul id='resultsList'></ul>
