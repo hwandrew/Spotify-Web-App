@@ -85,6 +85,9 @@ function selectSong() {
   if (tracks[trackIndex]["preview_url"]) {
     player.setAttribute("src", tracks[trackIndex]["preview_url"]);
     player.play();
+    var albumImage = tracks[trackIndex]["album"]["images"][1]["url"];
+    $('#songInfo').empty();
+    $('#songInfo').prepend($('<img>', {id:'albumImage', src:albumImage}));
   }
   else {
     alert("preview unavailable");
