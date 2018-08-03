@@ -70,10 +70,10 @@ function updateAnalyzer() {
   ctx.arc(canvas.width / 2, canvas.height / 2, fbcArray[100], 0, 2 * Math.PI);
   ctx.fill();
   ctx.fillStyle = '#C25B56';
-  bars = 100;
+  bars = 200;
   barWidth = 2;
   for (var i = 0; i < bars; i++) {
-    barX = i * 10;
+    barX = 170 + (i * 10);
     barHeight = -(fbcArray[i * 5]);
     ctx.fillRect(barX, canvas.height, barWidth, barHeight);
   }
